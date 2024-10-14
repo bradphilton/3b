@@ -1,0 +1,90 @@
+#include <stdio.h>
+#include <conio.h>
+#include <stdlib.h>
+
+struct node {
+    int data;
+    struct node *next;
+};
+
+struct node *front = NULL;
+struct node *rear = NULL;
+
+void delQueue() {
+    struct node *temp, *var = rear;
+    if (var == rear) {
+        rear = rear->next;
+        free(var);
+    } else {
+        printf("\nQueue is empty");
+    }
+}
+
+void push(int value) {
+    struct node *temp;
+    temp = (struct node *)malloc(sizeof(struct node));
+    temp->data = value;
+    if (front == NULL) {
+        front = temp;
+        front->next = NULL;
+        rear = front;
+    } else {
+        front->next = temp;
+        front = temp;
+        front->next = NULL;
+    }
+}
+
+void display() {
+    struct node *var = rear;
+    if (var != NULL) {
+        printf("\nElements are as:");
+        while (var != NULL) {
+            printf("\t%d", var->data);
+            var = var->next; // Increment the pointer to move to the next node
+        }
+        printf("\n");
+    } else {
+        printf("\nQueue is empty");
+    }
+}
+
+int main() {
+    int i = 0;
+    clrscr(); // Clear the screen
+
+    printf("\n1. Push to the queue");
+    printf("\n2. Pop from the queue");
+    printf("\n3. Display data from the queue");
+    printf("\n4. Exit\n");
+    
+    while (1) {
+        printf("\nChoose an option: ");
+        scanf("%d", &i);
+        switch (i) {
+            case 1: {
+                int value;
+                printf("\nEnter a value to push into the queue: ");
+                scanf("%d", &value);
+                push(value);
+                display();
+                break;
+            }
+            case 2: {
+                delQueue();
+                display();
+                break;
+            }
+            case 3: {
+                display();
+                break;
+            }
+            case 4:
+                exit(0);
+            default:
+                printf("\nWrong option");
+        }
+    }
+    getch(); // Wait for key press
+    return 0;
+}
